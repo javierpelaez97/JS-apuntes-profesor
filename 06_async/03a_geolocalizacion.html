@@ -34,43 +34,57 @@
     <div class="locationResult"></div>
 
     <script>
-        const getPosition = () => {
-            const options = {
+        const getPosition = () => {         //Esto es un obejto de configuración
+            const options = {               
                 enableHighAccuracy: false,
                 timeout: 5000,
                 maximumAge: 0,
             }
-            return new Promise((resolve, reject) => navigator.geolocation.getCurrentPosition(resolve, reject, options));
-        }
+            return new Promise((resolve, reject) => navigator.geolocation.getCurrentPosition(resolve, reject, options));  //Llamamos al método  y le decimos que pasa en caso de resolve, reject y las options
+
+        }   //resolve nos devuelve el primer objeto de la API como si fuera un ForEach
 
 
-/*         const getCountryNameByCoords = () => {
+        /*   const getCountryNameByCoords = () => {                          // Esto es una función para saber la posición dependidendo de la ubicación
             return getPosition()
                 .then(position => {
-                    const { latitude, longitude } = position.coords;
+                    const { latitude, longitude } = position.coords;        // Decimos que en el objeto position busque cords y queremos la Lat y long y que nos lo guarde constante.
                     return fetch(`https://geocode.maps.co/reverse?lat=${latitude}&lon=${longitude}`);
-                }) // extraer long y lat y hacer un fetch a geocode <-- el resolve de getPosition entra por aquí
+                })                                                          // extraer long y lat y hacer un fetch a geocode <-- el resolve de getPosition entra por aquí
                 .then(location => location.json())
-                .then(data => data.address.country) // convertir la respuesta de geocode a los datos que nos interesan
-                .catch(error => new Error(error)); // manejar el error <-- el reject de getPosition entra por aquí
+                .then(data => data.address.country)                         // convertir la respuesta de geocode a los datos que nos interesan
+                .catch(error => new Error(error));                          // manejar el error <-- el reject de getPosition entra por aquí
 
-         } */
+        }  
+         getCountryNameByCoords().then(location => console.log(location)).catch(error => console.error(error)); */
 
-         
+         // Como hacer los mismo que en la parte superior con ASYNC AWAIT
 
-         getCountryNameByCoords().then(response => {
-            document.querySelector('.locationResult').innerHTML = response;
+        const getCountryName = async function ()  {
+            try{
+                const position = await getPosition();  //Siempre que llamemos a una función debemos meterle un await
+                const { latitude, longitude } = position.coords;
+                const request = await fetch(`https://geocode.maps.co/reverse?lat=${latitude}&lon=${longitude}`);
+                const location = await request.json();
+                return data = location.address.country;
+            }catch(error){
+                console.log(error)
+            }
+        }
+
+        getCountryName().then(response => {
+            document.querySelector('.locationResult').innerHTML = response;             // Esta es la forma para imprimir por pantalla la ubicación 
             console.log(response);
         }).catch(error => console.error(error));
 
-
-        document.querySelector('.getLocationBtn').addEventListener('click', () => {
-            getPosition().then(position => {
-                console.log('lat: ', position.coords.latitude);
-                console.log('lon: ', position.coords.longitude);
-            }).catch(error => console.error);
+        document.querySelector('.getLocationBtn').addEventListener('click', () => {     //Esto lo que hace es añadir un evento de 'click' al botón
+            getPosition().then(position => {                                            //Llamamos al objeto de configuración y le realizamos una promesa para que nos devuelva la posicion
+                console.log('lat: ', position.coords.latitude);                         //Nos imprime la longitd y latitud
+                console.log('lon: ', position.coords.longitude);                        //esto lo estamos sacando de la variable position y el resto de la ubicación en en  navegador
+            }).catch(error => console.error);                                           //le damos un error por si no quiere funcionar
         })
 
+        
 
 
 

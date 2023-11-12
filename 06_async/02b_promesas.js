@@ -1,10 +1,10 @@
 
 
-/* const ganarLoteria = new Promise(function (resolve, reject) {
-    setTimeout(function () {
-        const number = Math.random();
-        if (number > 0.5) {
-            resolve('Ganaste el premio');
+/* const ganarLoteria = new Promise(function (resolve, reject) {    //Creamos una clase con una función  con resolve y reject
+    setTimeout(function () {                                        //Creamos una función para crear la asincoronia
+        const number = Math.random();                               //Math es un Método que devuelve un número aleatorio entre 0 y 1
+        if (number > 0.5) {                         
+            resolve('Ganaste el premio');                           //Se llama al método resolve si la promesa se devuelve cumplida.
         } else {
             reject(new Error('Perdiste el dinero'));
         }
@@ -27,14 +27,15 @@ const addCardAsync = async (country = 'spain') => {
 
 // addCardAsync().then(result => console.log('1', result)).catch(error => console.error(error));
 
-//addCardAsync();
+addCardAsync();   // También se puede instanciar de esta forma.
 
-(async () => {
+/* //forma nueva para isntanciar la asincronia es lo mismo que la de arriba.
+(async () => {   //creamos una función anonima
     try {
         //throw new Error('test');
-        const data = await addCardAsync();
-        console.log(data);
+        const data = await addCardAsync();      //Llamamos al data y a la función 
+        console.log(data);                      // nos imprime los datos de la funcion anterior
     } catch (error) {
         console.error(error);
     }
-})();
+})(); */

@@ -216,7 +216,7 @@
                 .catch(error => console.error(error));
         } */
 
-        const addCard = async (country = 'spain') => {
+        const addCard = async (country = 'spain') => {    
             try {
                 const request = await fetch(`https://restcountries.com/v3.1/name/${country}`);
                 const data = await request.json();
