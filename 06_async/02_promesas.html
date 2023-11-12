@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        pre {
+            background-color: #f4f4f4;
+            padding: 10px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: inherit;
+        }
+
+        html {
+            font-size: 62.5%;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: system-ui;
+            color: #555;
+            background-color: #f7f7f7;
+            min-height: 100vh;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .container {
+            display: flex;
+            flex-flow: column;
+            align-items: center;
+        }
+
+        .countries {
+            /* margin-bottom: 8rem; */
+            display: flex;
+
+            font-size: 2rem;
+            opacity: 0;
+            transition: opacity 1s;
+        }
+
+        .country {
+            background-color: #fff;
+            box-shadow: 0 2rem 5rem 1rem rgba(0, 0, 0, 0.1);
+            font-size: 1.8rem;
+            width: 30rem;
+            border-radius: 0.7rem;
+            margin: 0 3rem;
+            /* overflow: hidden; */
+        }
+
+        .neighbour::before {
+            content: 'Neighbour country';
+            width: 100%;
+            position: absolute;
+            top: -4rem;
+
+            text-align: center;
+            font-size: 1.8rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            color: #888;
+        }
+
+        .neighbour {
+            transform: scale(0.8) translateY(1rem);
+            margin-left: 0;
+        }
+
+        .country-img {
+            width: 30rem;
+            height: 17rem;
+            object-fit: cover;
+            background-color: #eee;
+            border-top-left-radius: 0.7rem;
+            border-top-right-radius: 0.7rem;
+        }
+
+        .country-data {
+            padding: 2.5rem 3.75rem 3rem 3.75rem;
+        }
+
+        .country-name {
+            font-size: 2.7rem;
+            margin-bottom: 0.7rem;
+        }
+
+        .country-region {
+            font-size: 1.4rem;
+            margin-bottom: 2.5rem;
+            text-transform: uppercase;
+            color: #888;
+        }
+
+        .country-row:not(:last-child) {
+            margin-bottom: 1rem;
+        }
+
+        .country-row span {
+            display: inline-block;
+            margin-right: 2rem;
+            font-size: 2.4rem;
+        }
+
+        .btn-country {
+            border: none;
+            font-size: 2rem;
+            padding: 2rem 5rem;
+            border-radius: 0.7rem;
+            color: white;
+            background-color: orangered;
+            cursor: pointer;
+        }
+
+        .images {
+            display: flex;
+        }
+
+        .images img {
+            display: block;
+            width: 80rem;
+            margin: 4rem;
+        }
+
+        .images img.parallel {
+            width: 40rem;
+            margin: 2rem;
+            border: 3rem solid white;
+            box-shadow: 0 2rem 5rem 1rem rgba(0, 0, 0, 0.1);
+        }
+        .getLocationBtn {
+            margin-top: 25px;
+            padding: 10px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        .find-country {
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        p {
+            margin: 0;
+            font-size: 16px;
+            color: #333;
+        }
+
+        input[type="text"] {
+            width: 80%;
+            padding: 8px;
+            margin: 10px 0;
+            box-sizing: border-box;
+        }
+
+        input[type="submit"] {
+            background-color: #4caf50;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+
+<body>
+
+    <main class="container">
+        <form class="find-country">
+            <p>Buscar un país:</p>
+            <input class="name-input" type="text" placeholder="Ingrese el nombre del país">
+            <input type="submit" value="Buscar">
+        </form>
+        <div class="countries">
+
+        </div>
+        <button class="getLocationBtn">¿Dónde estoy?</button>
+    </main>
+
+    <script>
+        const countriesContainer = document.querySelector('.countries');
+
+
+        /* 
+        * Function addCard()
+        * country (string): the name of a country.
+        * 
+        * return: data[0]: JSON object
+        */
+/*         const addCard = (country = 'spain') => {
+            const request = fetch(`https://restcountries.com/v3.1/name/${country}`)
+                .then(response => response.json())
+                .then(data => {             //hacemos una función que haga cosas.
+                    console.log(data[0]);
+                    addCountry(data[0]);  // le pedimos que nos abra funcion aadCountry en la posición 0
+                })
+                .catch(error => console.error(error));
+        } */
+
+        const addCard = async (country = 'spain') => {
+            try {
+                const request = await fetch(`https://restcountries.com/v3.1/name/${country}`);
+                const data = await request.json();
+                addCountry(data[0]);
+            } catch (error) {
+                console.error(error);
+            }
+        }
+
+
+        const addCountry = (data) => {
+            if (data) {
+                const htmlStr = `
+                    <article class="country">
+                    <img class="country-img" src="${data.flags.png}">
+                    <div class="country-data">
+                        <h3 class="country-name">${data.name.official}</h3>
+                        <h4 class="country-region">${data.region}</h4>
+                        <p class="country-row"><span>&#128107;</span>${formatNumberEs(data.population)}</p> 
+                        <p class="country-row"><span>&#128483;</span>${data.languages[Object.keys(data.languages)[0]]}</p>
+                        <p class="country-row"><span>&#128176;</span>${data.currencies[Object.keys(data.currencies)[0]].name}</p>
+                    </div>
+                    </article>`;
+
+                countriesContainer.insertAdjacentHTML('beforeend', htmlStr);
+                countriesContainer.style.opacity = 1;
+            }
+        }
+
+        const formatNumberEs = number => number.toLocaleString(
+            'es-ES',
+            { style: 'decimal', useGrouping: true, minimumFractionDigits: 0 }
+        );
+    </script>
+</body>
+
+</html>

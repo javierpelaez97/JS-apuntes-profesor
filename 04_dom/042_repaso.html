@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<style>
+    * {
+        font-family: sans-serif;
+        color: #444;
+    }
+
+    #container {
+        height: 500px;
+        width: 600px;
+        border: 1px solid #888;
+        margin: 0 auto;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    #location {
+        width: 500px;
+        border: 1px solid #888;
+        padding: 15px;
+        text-align: right;
+        line-height: 25px;
+
+    }
+</style>
+
+<body>
+    <div id="container">
+        <h1 class="saludar">Las teclas que voy pulsando son:</h1>
+        <p id="location"></p>
+    </div>
+
+<script>
+    // guardar lo que pulsa en una lista
+    const teclas = new Array();
+    // capturar lo que pulsa el usuario
+    document.addEventListener('keydown', (event) => {
+        teclas.push(event.key);
+         console.log(teclas);   
+        // imprimir todo lo que hay en la lista en el cuadrado
+        if (document.querySelector('#location')) {
+            console.log(event);
+            document.querySelector('#location').innerHTML = teclas.join(', ');
+        }
+    });
+
+    if(document.querySelector('.saludar')) {
+        document.querySelector('.saludar').addEventListener('click', (event) => {
+            console.log(event);
+        });
+    }
+
+
+</script>
+
+</body>
+
+</html>

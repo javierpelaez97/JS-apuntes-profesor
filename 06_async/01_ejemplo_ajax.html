@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+
+    <script>
+        'use strict';   // le obligamos a que sea estrícto
+
+        var request = new XMLHttpRequest();     //Creamos una  clase que asigna las peticiones 
+
+        var country = 'spain';                  //creamos una clase que nos almacena lo que queremos recibir de la api
+
+        request.open('GET', `https://restcountries.com/v3.1/name/${country}`);      //le asignamos una URL de la API a nuestra clase para las peticiones
+
+        request.addEventListener('load', function () {                              //Añadimos un evento de carga con una función
+            const data = JSON.parse(this.response);     // Creamos una clase "data" para que guarde y transforme a JSON la información de la APi con el método JSON.parse
+            console.log(data);                          // Imprimimos el valor de data que en este caso es el contenido de la API
+        });
+
+        request.send();                                 //  Enviamos la petición
+    </script>
+</body>
+
+</html>

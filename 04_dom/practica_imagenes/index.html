@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<style>
+    #card-container {
+        margin: 0 auto;
+        width: 1500px;
+        height: 800px;
+        border: 1px solid grey;
+        display: flex;
+        flex-wrap: wrap;
+    }
+
+    .card {
+        margin: 10px;
+        border: 1px solid grey;
+        width: fit-content;
+        height: fit-content;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 20px;
+
+    }
+</style>
+
+<body>
+
+    <div id="card-container"></div>
+
+<button id="btn-rojo"></button>
+
+</body>
+<script>
+    const cards = [
+        {
+            "img": "http://dummyimage.com/137x100.png/cc0000/ffffff",
+            "title": "泰霖"
+        }, {
+            "img": "http://dummyimage.com/151x100.png/dddddd/000000",
+            "title": "宸瑜"
+        }, {
+            "img": "http://dummyimage.com/140x100.png/ff4444/ffffff",
+            "title": "彤雨"
+        }, {
+            "img": "http://dummyimage.com/250x100.png/ff4444/ffffff",
+            "title": "亦涵"
+        }, {
+            "img": "http://dummyimage.com/152x100.png/cc0000/ffffff",
+            "title": "俊泽"
+        }, {
+            "img": "http://dummyimage.com/198x100.png/dddddd/000000",
+            "title": "鑫蕾"
+        }, {
+            "img": "http://dummyimage.com/197x100.png/ff4444/ffffff",
+            "title": "皓睿"
+        }, {
+            "img": "http://dummyimage.com/196x100.png/ff4444/ffffff",
+            "title": "远帆"
+        }, {
+            "img": "http://dummyimage.com/177x100.png/dddddd/000000",
+            "title": "漫妮"
+        }, {
+            "img": "http://dummyimage.com/191x100.png/dddddd/000000",
+            "title": "清凌"
+        }, {
+            "img": "http://dummyimage.com/177x100.png/cc0000/ffffff",
+            "title": "茹雪",
+            /* "color": "azul" */
+        },
+    ];
+
+    var container = document.querySelector('#card-container');
+   
+    cards.forEach(card => {
+        let cardNode = document.createElement('div');
+        cardNode.className = 'card';
+        let img = document.createElement('img');
+        img.setAttribute('src', card.img);
+        let title = document.createElement('p');
+        title.innerHTML = card.title;
+        container.appendChild(cardNode);
+        cardNode.appendChild(img);
+        cardNode.appendChild(title);
+    });
+
+/*     let btnRojo = document.querySelector('#btn-rojo');
+    btnRojo.addEventListener('click', function(){
+        cards.forEach(card => {
+            if(card.color == 'rojo') {
+                let cardNode = document.createElement('div');
+                cardNode.className = 'card';
+                let img = document.createElement('img');
+                img.setAttribute('src', card.img);
+                let title = document.createElement('p');
+                title.innerHTML = card.title;
+                container.appendChild(cardNode);
+                cardNode.appendChild(img);
+                cardNode.appendChild(title);
+            }
+    });
+    });
+    let btnAzul; */
+
+
+
+
+</script>
+
+
+</html>
